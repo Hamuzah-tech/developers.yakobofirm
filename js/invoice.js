@@ -32,14 +32,18 @@ const INVOICE_CONFIG = {
     allowedEmail: "jmhamuzah@gmail.com",
     business: {
         name: "Yakobo Web Development Firm",
-        logo: "/assets/images/logo.png",
         phone: "+265 990 705 194",
-        email: "jmhamuzah@gmail.com",
+        email: "products@yakobowebdevmw.com",
         website: "",
         address: "Malawi",
-        payment: "Payment is due by the invoice due date. Bank transfer or mobile money details can be confirmed on request.",
         terms: "This invoice is payable in full by the due date. Work remains the property of Yakobo Web Development Firm until payment is received."
-    }
+    },
+    paymentMethods: [
+        { name: "National Bank", account: "1009423927", logo: "/assets/images/payments/national-bank.png" },
+        { name: "Airtel Money", account: "0990705194", logo: "/assets/images/payments/airtel-money.png" },
+        { name: "TNM Mpamba", account: "0899808842", logo: "/assets/images/payments/tnm-mpamba.png" },
+        { name: "Simpo Cash", account: "0990705194", logo: "/assets/images/payments/simpo-cash.png" }
+    ]
 };
 
 const firebaseApp = initializeApp(INVOICE_CONFIG.firebaseConfig);
@@ -49,6 +53,7 @@ googleProvider.setCustomParameters({ prompt: "select_account" });
 
 const BUSINESS = INVOICE_CONFIG.business;
 const ALLOWED_EMAIL = String(INVOICE_CONFIG.allowedEmail).trim().toLowerCase();
+const PAYMENT_METHODS = INVOICE_CONFIG.paymentMethods;
 
 const gate = document.getElementById("invoice-gate");
 const denied = document.getElementById("invoice-denied");
@@ -63,7 +68,7 @@ let started = false;
 let denyLock = false;
 let authChecked = false;
 let redirectError = "";
-let logoData = "";
+let paymentLogoData = [];
 
 function currencyCode() {
     const el = document.getElementById("currency");
@@ -382,6 +387,30 @@ function contactLines() {
     return [BUSINESS.phone, BUSINESS.email, BUSINESS.website, BUSINESS.address].filter(Boolean);
 }
 
+function paymentMethodsHtml() {
+    return (
+        '<div class="inv-pay">' +
+        "<strong>Payment methods</strong>" +
+        '<div class="inv-pay-grid">' +
+        PAYMENT_METHODS.map(function (method) {
+            return (
+                '<div class="inv-pay-item">' +
+                '<img src="' +
+                escapeHtml(method.logo) +
+                '" alt="' +
+                escapeHtml(method.name) +
+                '">' +
+                "<div><b>" +
+                escapeHtml(method.name) +
+                "</b><span>" +
+                escapeHtml(method.account) +
+                "</span></div></div>"
+            );
+        }).join("") +
+        "</div></div>"
+    );
+}
+
 function extraBlock(title, text) {
     if (!text) return "";
     return '<div class="inv-notes"><strong>' + title + "</strong><p>" + escapeHtml(text) + "</p></div>";
@@ -420,9 +449,6 @@ function renderPreview() {
     preview.innerHTML =
         '<div class="inv-top">' +
         '<div class="inv-brand">' +
-        '<img src="' +
-        escapeHtml(BUSINESS.logo) +
-        '" alt="">' +
         "<div><h3>" +
         escapeHtml(BUSINESS.name) +
         "</h3><p>" +
@@ -468,7 +494,8 @@ function renderPreview() {
         '<div class="grand"><span>Grand total</span><span>' +
         money(t.grand) +
         "</span></div></div>" +
-        extraBlock("Payment information", val("payment")) +
+        paymentMethodsHtml() +
+        extraBlock("Additional payment notes", val("payment")) +
         extraBlock("Notes", val("notes")) +
         extraBlock("Terms and conditions", val("terms"));
 }
@@ -478,12 +505,8 @@ function setStatus(message, kind) {
     statusEl.className = "invoice-status" + (kind ? " is-" + kind : "");
 }
 
-function loadLogo() {
+function loadImageData(src) {
     return new Promise(function (resolve) {
-        if (logoData) {
-            resolve(logoData);
-            return;
-        }
         const img = new Image();
         img.onload = function () {
             try {
@@ -491,16 +514,29 @@ function loadLogo() {
                 canvas.width = img.naturalWidth || 200;
                 canvas.height = img.naturalHeight || 200;
                 canvas.getContext("2d").drawImage(img, 0, 0);
-                logoData = canvas.toDataURL("image/png");
+                resolve(canvas.toDataURL("image/png"));
             } catch (err) {
-                logoData = "";
+                resolve("");
             }
-            resolve(logoData);
         };
         img.onerror = function () {
             resolve("");
         };
-        img.src = BUSINESS.logo;
+        img.src = src;
+    });
+}
+
+function loadPaymentLogos() {
+    if (paymentLogoData.length === PAYMENT_METHODS.length && paymentLogoData.every(Boolean)) {
+        return Promise.resolve(paymentLogoData);
+    }
+    return Promise.all(
+        PAYMENT_METHODS.map(function (method) {
+            return loadImageData(method.logo);
+        })
+    ).then(function (images) {
+        paymentLogoData = images;
+        return paymentLogoData;
     });
 }
 
@@ -528,19 +564,13 @@ function buildPdf() {
     doc.setFillColor(cyan[0], cyan[1], cyan[2]);
     doc.rect(0, 38, pageW, 2.2, "F");
 
-    if (logoData) {
-        try {
-            doc.addImage(logoData, "PNG", margin, 8, 18, 18);
-        } catch (err) {}
-    }
-
     doc.setTextColor(255, 255, 255);
     doc.setFont("helvetica", "bold");
     doc.setFontSize(13);
-    doc.text(BUSINESS.name, logoData ? margin + 22 : margin, 16);
+    doc.text(BUSINESS.name, margin, 16);
     doc.setFont("helvetica", "normal");
     doc.setFontSize(8.5);
-    doc.text(contactLines().join("  ·  "), logoData ? margin + 22 : margin, 23);
+    doc.text(contactLines().join("  ·  "), margin, 23);
 
     doc.setFont("helvetica", "bold");
     doc.setFontSize(18);
@@ -642,7 +672,39 @@ function buildPdf() {
         y += lines.length * 4.5 + 4;
     }
 
-    writeSection("PAYMENT INFORMATION", val("payment"));
+    y = ensureSpace(doc, y, 52);
+    doc.setTextColor(navy[0], navy[1], navy[2]);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(8);
+    doc.text("PAYMENT METHODS", margin, y);
+    y += 8;
+    const colW = (pageW - margin * 2) / 2;
+    const rowH = 18;
+    PAYMENT_METHODS.forEach(function (method, i) {
+        if (i > 0 && i % 2 === 0) {
+            y += rowH;
+        }
+        if (i % 2 === 0) {
+            y = ensureSpace(doc, y, rowH);
+        }
+        const x = margin + (i % 2) * colW;
+        if (paymentLogoData[i]) {
+            try {
+                doc.addImage(paymentLogoData[i], "PNG", x, y - 4, 11, 11);
+            } catch (err) {}
+        }
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(8.5);
+        doc.setTextColor(navy[0], navy[1], navy[2]);
+        doc.text(method.name, x + 14, y);
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(8);
+        doc.setTextColor(muted[0], muted[1], muted[2]);
+        doc.text(method.account, x + 14, y + 4.5);
+    });
+    y += rowH + 6;
+
+    writeSection("ADDITIONAL PAYMENT NOTES", val("payment"));
     writeSection("NOTES", val("notes"));
     writeSection("TERMS AND CONDITIONS", val("terms"));
 
@@ -655,11 +717,11 @@ function buildPdf() {
 }
 
 function generatePdfDoc() {
-    return loadLogo().then(buildPdf);
+    return loadPaymentLogos().then(buildPdf);
 }
 
 function startGenerator() {
-    document.getElementById("payment").value = BUSINESS.payment || "";
+    document.getElementById("payment").value = "";
     document.getElementById("terms").value = BUSINESS.terms || "";
     document.getElementById("invoice-number").value = nextInvoiceNumber();
     document.getElementById("invoice-date").value = todayISO();
