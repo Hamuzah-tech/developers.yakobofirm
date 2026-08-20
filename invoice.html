@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice | Yakobo Web Development Firm</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#030553">
+    <link rel="icon" href="assets/images/logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/invoice.css">
+</head>
+<body class="invoice-page">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+        <div class="container nav-wrap">
+            <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+                <span></span><span></span><span></span>
+            </button>
+            <nav class="nav" id="site-nav" aria-label="Primary">
+                <a class="nav-link" href="index.html">Home</a>
+                <a class="nav-link" href="about.html">About</a>
+                <div class="has-dropdown">
+                    <a class="nav-link dropdown-toggle" href="samples.html" aria-expanded="false" aria-haspopup="true" aria-controls="samples-menu">
+                        Samples
+                    </a>
+                    <div class="dropdown" id="samples-menu" role="menu">
+                        <a href="schools.html" role="menuitem">School Websites</a>
+                        <a href="corporate.html" role="menuitem">Corporate Websites</a>
+                        <a href="business.html" role="menuitem">Business Websites</a>
+                        <a href="organisations.html" role="menuitem">Organisation Websites</a>
+                        <a href="web-applications.html" role="menuitem">Web Applications</a>
+                        <a href="ecommerce.html" role="menuitem">E-commerce Websites</a>
+                        <a href="portfolio-sites.html" role="menuitem">Personal / Portfolio Websites</a>
+                        <a href="events.html" role="menuitem">Event Websites</a>
+                        <a href="booking.html" role="menuitem">Booking Systems</a>
+                        <a href="management.html" role="menuitem">Management Systems</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <div class="nav-overlay"></div>
+
+    <main id="main">
+        <section class="invoice-gate" id="invoice-gate">
+            <div class="invoice-card">
+                <p class="section-kicker">Private</p>
+                <h1>Yakobo Invoice Generator</h1>
+                <p>Sign in with Google to create invoices. Only the authorised account can continue.</p>
+                <p class="invoice-setup" id="google-setup" hidden></p>
+                <button class="btn btn-navy google-signin-btn" type="button" id="btn-google">Sign in with Google</button>
+            </div>
+        </section>
+
+        <section class="invoice-gate" id="invoice-denied" hidden>
+            <div class="invoice-card">
+                <p class="section-kicker">Private</p>
+                <h1>Access Denied</h1>
+                <p>You are not authorized to use this invoice generator.</p>
+                <button class="btn btn-primary" type="button" id="btn-retry">Sign in with a different account</button>
+            </div>
+        </section>
+
+        <div id="invoice-app" hidden>
+            <section class="page-hero">
+                <div class="container">
+                    <p class="breadcrumb">Private / Invoice</p>
+                    <h1>Create an <span class="accent">invoice</span></h1>
+                    <p>Fill in the details. The preview updates as you type. Then download, print, or open an email draft.</p>
+                </div>
+            </section>
+
+            <section class="section invoice-app">
+                <div class="container invoice-layout">
+                    <div class="invoice-form">
+                        <form id="invoice-form" autocomplete="off">
+                            <h2>Customer</h2>
+                            <div class="invoice-grid">
+                                <label>Customer name
+                                    <input type="text" id="customer-name">
+                                </label>
+                                <label>Company / Organisation
+                                    <input type="text" id="company-name">
+                                </label>
+                                <label>Phone
+                                    <input type="text" id="customer-phone">
+                                </label>
+                                <label>Email
+                                    <input type="email" id="customer-email">
+                                </label>
+                                <label class="span-2">Address
+                                    <textarea id="customer-address" rows="2"></textarea>
+                                </label>
+                            </div>
+
+                            <h2>Invoice</h2>
+                            <div class="invoice-grid">
+                                <label>Invoice number
+                                    <input type="text" id="invoice-number">
+                                </label>
+                                <label>Invoice date
+                                    <input type="date" id="invoice-date">
+                                </label>
+                                <label>Due date
+                                    <input type="date" id="due-date">
+                                </label>
+                                <label>Currency
+                                    <select id="currency">
+                                        <option value="MWK" selected>MWK — Malawian Kwacha</option>
+                                        <option value="USD">USD — US Dollar</option>
+                                        <option value="ZAR">ZAR — South African Rand</option>
+                                        <option value="EUR">EUR — Euro</option>
+                                        <option value="GBP">GBP — British Pound</option>
+                                    </select>
+                                </label>
+                                <label>Discount (<span data-currency-label>MWK</span>)
+                                    <input type="number" id="discount" min="0" step="0.01" value="0">
+                                </label>
+                                <label>Tax / VAT (%)
+                                    <input type="number" id="tax" min="0" step="0.01" value="0">
+                                </label>
+                                <label class="span-2">Payment information
+                                    <textarea id="payment" rows="2"></textarea>
+                                </label>
+                                <label class="span-2">Notes
+                                    <textarea id="notes" rows="2"></textarea>
+                                </label>
+                                <label class="span-2">Terms and conditions
+                                    <textarea id="terms" rows="2"></textarea>
+                                </label>
+                            </div>
+
+                            <div class="invoice-items-head">
+                                <h2>Items</h2>
+                                <button class="btn btn-navy btn-sm" type="button" id="add-item">Add item</button>
+                            </div>
+                            <div class="invoice-table-wrap">
+                                <table class="invoice-items">
+                                    <thead>
+                                        <tr>
+                                            <th>Description</th>
+                                            <th>Quantity</th>
+                                            <th>Unit price</th>
+                                            <th>Amount</th>
+                                            <th><span class="sr-only">Remove</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="items-body"></tbody>
+                                </table>
+                            </div>
+
+                            <div class="invoice-actions">
+                                <button class="btn btn-primary" type="button" id="btn-pdf">Download PDF</button>
+                                <button class="btn btn-navy" type="button" id="btn-print">Print Invoice</button>
+                                <button class="btn btn-navy" type="button" id="btn-email">Email Invoice</button>
+                                <button class="btn btn-ghost" type="button" id="btn-signout">Sign Out</button>
+                            </div>
+                            <p class="invoice-hint">Download the PDF first, then attach it to your email.</p>
+                            <p class="invoice-status" id="invoice-status" role="status"></p>
+                        </form>
+                    </div>
+
+                    <aside class="invoice-preview-wrap">
+                        <h2>Preview</h2>
+                        <div class="invoice-paper" id="invoice-preview"></div>
+                    </aside>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="js/projects.js"></script>
+    <script src="js/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script type="module" src="js/invoice.js"></script>
+</body>
+</html>
