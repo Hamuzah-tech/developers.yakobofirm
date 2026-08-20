@@ -11,7 +11,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
 import {
     getAuth,
     GoogleAuthProvider,
-    signInWithRedirect,
+    signInWithPopup,
     getRedirectResult,
     signOut,
     onAuthStateChanged,
@@ -46,7 +46,6 @@ const firebaseApp = initializeApp(INVOICE_CONFIG.firebaseConfig);
 const auth = getAuth(firebaseApp);
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: "select_account" });
-console.log("Firebase Auth initialized");
 
 const BUSINESS = INVOICE_CONFIG.business;
 const ALLOWED_EMAIL = String(INVOICE_CONFIG.allowedEmail).trim().toLowerCase();
@@ -62,9 +61,9 @@ const googleBtn = document.getElementById("btn-google");
 
 let started = false;
 let denyLock = false;
+let authChecked = false;
 let redirectError = "";
 let logoData = "";
-const REDIRECT_KEY = "yakobo-invoice-redirect";
 
 function currencyCode() {
     const el = document.getElementById("currency");
@@ -203,8 +202,11 @@ function authErrorMessage(err) {
     if (code === "auth/network-request-failed") {
         return "Network error during Google sign-in. Check your connection and try again.";
     }
-    if (code === "auth/internal-error") {
-        return "Google sign-in hit an internal error. Try again.";
+    if (code === "auth/popup-blocked") {
+        return "Google sign-in popup was blocked. Allow popups for this site and try again.";
+    }
+    if (code === "auth/popup-closed-by-user" || code === "auth/cancelled-popup-request") {
+        return "Google sign-in was closed before it finished. Try again.";
     }
     if (code === "auth/invalid-api-key") {
         return "Firebase API key is invalid. Check the firebaseConfig in js/invoice.js.";
@@ -216,6 +218,11 @@ function authErrorMessage(err) {
 }
 
 async function handleUser(user) {
+    if (!authChecked && !user) {
+        return;
+    }
+    authChecked = true;
+
     if (denyLock && !user) {
         showDenied();
         return;
@@ -253,16 +260,18 @@ async function handleUser(user) {
 
 async function signInGoogle() {
     redirectError = "";
-    setAuthMessage("Redirecting to Google…");
+    setAuthMessage("Opening Google…");
     googleBtn.disabled = true;
     try {
-        sessionStorage.setItem(REDIRECT_KEY, "1");
         await setPersistence(auth, browserLocalPersistence);
         console.log("Persistence set to browserLocalPersistence");
-        await signInWithRedirect(auth, googleProvider);
+        const result = await signInWithPopup(auth, googleProvider);
+        console.log("signInWithPopup result:", result);
+        console.log("signInWithPopup email:", result && result.user && result.user.email);
+        authChecked = true;
+        await handleUser(result && result.user);
     } catch (err) {
-        console.error("signInWithRedirect error:", err);
-        sessionStorage.removeItem(REDIRECT_KEY);
+        console.error("signInWithPopup error:", err);
         googleBtn.hidden = false;
         googleBtn.disabled = false;
         setAuthMessage(authErrorMessage(err));
@@ -270,24 +279,38 @@ async function signInGoogle() {
 }
 
 async function bootAuth() {
-    const pending = sessionStorage.getItem(REDIRECT_KEY) === "1";
-    showChecking(pending ? "Signing you in…" : "Checking authentication...");
+    showChecking("Checking authentication...");
+    console.log("AUTH ORIGIN:", window.location.origin);
+    console.log("AUTH PATH:", window.location.pathname);
+    console.log("AUTH DOMAIN:", INVOICE_CONFIG.firebaseConfig.authDomain);
+    console.log("Firebase Auth initialized:", auth);
+
+    try {
+        await setPersistence(auth, browserLocalPersistence);
+        console.log("Persistence set to browserLocalPersistence");
+    } catch (err) {
+        console.error("setPersistence error:", err);
+    }
+
+    onAuthStateChanged(auth, function (user) {
+        console.log("AUTH STATE:", user);
+        console.log("AUTH EMAIL:", user && user.email);
+        authChecked = true;
+        handleUser(user);
+    });
 
     try {
         const result = await getRedirectResult(auth);
         console.log("getRedirectResult:", result);
         console.log("getRedirectResult email:", result && result.user && result.user.email);
+        if (result && result.user) {
+            authChecked = true;
+            await handleUser(result.user);
+        }
     } catch (err) {
         console.error("getRedirectResult error:", err);
         redirectError = authErrorMessage(err);
     }
-
-    onAuthStateChanged(auth, function (user) {
-        console.log("Firebase auth state changed:", user);
-        console.log("Firebase user email:", user && user.email);
-        sessionStorage.removeItem(REDIRECT_KEY);
-        handleUser(user);
-    });
 }
 
 async function firebaseSignOut() {
