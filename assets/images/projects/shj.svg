@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img" aria-label="Sir Harry Johnston International School website">
+  <rect width="1200" height="750" fill="#F4F1EA"/>
+  <rect width="1200" height="42" fill="#E8E4D9"/>
+  <circle cx="22" cy="21" r="6" fill="#E05A54"/><circle cx="42" cy="21" r="6" fill="#E0B254"/><circle cx="62" cy="21" r="6" fill="#5BBF73"/>
+  <rect x="100" y="12" width="420" height="18" rx="9" fill="#FFF"/>
+  <rect y="42" width="1200" height="72" fill="#1B365D"/>
+  <rect x="48" y="62" width="36" height="32" rx="3" fill="#C9A227"/>
+  <rect x="96" y="68" width="180" height="10" rx="2" fill="#F4F1EA"/>
+  <rect x="96" y="84" width="120" height="7" rx="2" fill="#8AA0BF"/>
+  <rect x="720" y="72" width="52" height="8" rx="2" fill="#C9D4E4"/>
+  <rect x="788" y="72" width="52" height="8" rx="2" fill="#C9D4E4"/>
+  <rect x="856" y="72" width="64" height="8" rx="2" fill="#C9D4E4"/>
+  <rect x="1040" y="62" width="112" height="32" rx="3" fill="#C9A227"/>
+  <rect y="114" width="1200" height="280" fill="#163052"/>
+  <rect x="80" y="170" width="220" height="10" rx="2" fill="#C9A227"/>
+  <rect x="80" y="198" width="520" height="28" rx="3" fill="#F4F1EA"/>
+  <rect x="80" y="236" width="380" height="28" rx="3" fill="#F4F1EA"/>
+  <rect x="80" y="284" width="420" height="12" rx="2" fill="#8AA0BF"/>
+  <rect x="80" y="320" width="140" height="36" rx="3" fill="#C9A227"/>
+  <rect x="236" y="320" width="140" height="36" rx="3" fill="none" stroke="#C9A227" stroke-width="2"/>
+  <rect x="48" y="430" width="350" height="160" rx="8" fill="#FFF"/>
+  <rect x="72" y="454" width="140" height="12" rx="2" fill="#1B365D"/>
+  <rect x="72" y="480" width="280" height="8" rx="2" fill="#C9C4B8"/>
+  <rect x="72" y="498" width="240" height="8" rx="2" fill="#C9C4B8"/>
+  <rect x="425" y="430" width="350" height="160" rx="8" fill="#FFF"/>
+  <rect x="449" y="454" width="160" height="12" rx="2" fill="#1B365D"/>
+  <rect x="449" y="480" width="280" height="8" rx="2" fill="#C9C4B8"/>
+  <rect x="449" y="498" width="240" height="8" rx="2" fill="#C9C4B8"/>
+  <rect x="802" y="430" width="350" height="160" rx="8" fill="#FFF"/>
+  <rect x="826" y="454" width="150" height="12" rx="2" fill="#1B365D"/>
+  <rect x="826" y="480" width="280" height="8" rx="2" fill="#C9C4B8"/>
+  <rect x="826" y="498" width="240" height="8" rx="2" fill="#C9C4B8"/>
+  <rect x="48" y="620" width="1104" height="90" rx="8" fill="#1B365D"/>
+</svg>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organisation Websites | Yakobo Web Development Firm</title>
+    <meta name="description" content="Organisation websites designed and developed by Yakobo Web Development Firm for NGOs and community organisations.">
+    <meta property="og:title" content="Organisation Websites | Yakobo Web Development Firm">
+    <meta property="og:description" content="Websites for NGOs, development organisations and community organisations.">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#030553">
+    <link rel="icon" href="assets/images/logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+        <div class="container nav-wrap">
+            <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+                <span></span><span></span><span></span>
+            </button>
+            <nav class="nav" id="site-nav" aria-label="Primary">
+                <a class="nav-link" href="index.html">Home</a>
+                <a class="nav-link" href="about.html">About</a>
+                <div class="has-dropdown">
+                    <a class="nav-link dropdown-toggle is-active" href="samples.html" aria-expanded="false" aria-haspopup="true" aria-controls="samples-menu">
+                        Samples
+                    </a>
+                                        <div class="dropdown" id="samples-menu" role="menu">
+                        <a href="schools.html" role="menuitem">School Websites</a>
+                        <a href="corporate.html" role="menuitem">Corporate Websites</a>
+                        <a href="business.html" role="menuitem">Business Websites</a>
+                        <a href="organisations.html" class="is-active" role="menuitem">Organisation Websites</a>
+                        <a href="web-applications.html" role="menuitem">Web Applications</a>
+                        <a href="ecommerce.html" role="menuitem">E-commerce Websites</a>
+                        <a href="portfolio-sites.html" role="menuitem">Personal / Portfolio Websites</a>
+                        <a href="events.html" role="menuitem">Event Websites</a>
+                        <a href="booking.html" role="menuitem">Booking Systems</a>
+                        <a href="management.html" role="menuitem">Management Systems</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <div class="nav-overlay"></div>
+
+    <main id="main">
+        <section class="page-hero">
+            <div class="container reveal">
+                <p class="breadcrumb"><a href="index.html">Home</a> / Organisation Websites</p>
+                <h1>Organisation <span class="accent">Websites</span></h1>
+                <p>A selection of organisation websites we've designed and developed.</p>
+            </div>
+        </section>
+
+        <section class="section" aria-label="Organisation Websites">
+            <div class="container">
+                <div class="project-grid" data-project-list="organisations"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-top">
+                <nav class="footer-nav" aria-label="Footer">
+                    <a href="index.html">Home</a>
+                    <a href="about.html">About</a>
+                    <a href="samples.html">Samples</a>
+                </nav>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copy">&copy; <span data-year>2026</span> <span data-site-full-name>Yakobo Web Development Firm</span>.</p>
+                <div class="footer-legal">
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="terms.html">Terms of Service</a>
+                </div>
+                <button class="back-to-top" type="button" aria-label="Scroll to top">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 14l6-6 6 6"/></svg>
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/projects.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

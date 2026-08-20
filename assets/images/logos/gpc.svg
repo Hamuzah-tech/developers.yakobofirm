@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 72" role="img" aria-label="GPC Malawi">
+  <circle cx="32" cy="36" r="24" fill="#1A237E"/>
+  <circle cx="32" cy="36" r="10" fill="#F128C8"/>
+  <text x="66" y="32" font-family="Arial, sans-serif" font-size="22" font-weight="800" fill="#1A237E">GPC</text>
+  <text x="66" y="52" font-family="Arial, sans-serif" font-size="10" letter-spacing="2.4" fill="#F128C8">MALAWI</text>
+</svg>

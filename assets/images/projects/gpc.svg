@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img" aria-label="GPC Malawi website">
+  <rect width="1200" height="750" fill="#FAF7FB"/>
+  <rect width="1200" height="42" fill="#EFE6F4"/>
+  <circle cx="22" cy="21" r="6" fill="#E05A54"/><circle cx="42" cy="21" r="6" fill="#E0B254"/><circle cx="62" cy="21" r="6" fill="#5BBF73"/>
+  <rect x="100" y="12" width="420" height="18" rx="9" fill="#FFF"/>
+  <rect y="42" width="1200" height="70" fill="#1A237E"/>
+  <circle cx="68" cy="77" r="18" fill="#F128C8"/>
+  <rect x="96" y="68" width="70" height="14" rx="2" fill="#FFF"/>
+  <rect x="680" y="72" width="54" height="8" rx="2" fill="#B0B8E8"/>
+  <rect x="748" y="72" width="70" height="8" rx="2" fill="#B0B8E8"/>
+  <rect x="832" y="72" width="54" height="8" rx="2" fill="#B0B8E8"/>
+  <rect x="1020" y="58" width="132" height="36" rx="18" fill="#F128C8"/>
+  <rect y="112" width="1200" height="290" fill="#241A4A"/>
+  <rect x="80" y="176" width="240" height="10" rx="2" fill="#F128C8"/>
+  <rect x="80" y="204" width="560" height="28" rx="3" fill="#FFF"/>
+  <rect x="80" y="244" width="480" height="28" rx="3" fill="#FFF"/>
+  <rect x="80" y="292" width="400" height="10" rx="2" fill="#C5B8E0"/>
+  <rect x="80" y="324" width="150" height="36" rx="18" fill="#F128C8"/>
+  <circle cx="980" cy="260" r="110" fill="#1A237E"/>
+  <circle cx="980" cy="260" r="54" fill="#F128C8"/>
+  <rect x="48" y="436" width="360" height="170" rx="14" fill="#FFF"/>
+  <rect x="72" y="460" width="48" height="48" rx="24" fill="#FDE7F7"/>
+  <rect x="72" y="524" width="180" height="12" rx="2" fill="#1A237E"/>
+  <rect x="72" y="548" width="260" height="8" rx="2" fill="#D9CDE6"/>
+  <rect x="420" y="436" width="360" height="170" rx="14" fill="#FFF"/>
+  <rect x="444" y="460" width="48" height="48" rx="24" fill="#FDE7F7"/>
+  <rect x="444" y="524" width="180" height="12" rx="2" fill="#1A237E"/>
+  <rect x="444" y="548" width="260" height="8" rx="2" fill="#D9CDE6"/>
+  <rect x="792" y="436" width="360" height="170" rx="14" fill="#1A237E"/>
+  <rect x="816" y="524" width="180" height="12" rx="2" fill="#FFF"/>
+  <rect x="816" y="548" width="240" height="8" rx="2" fill="#F128C8"/>
+</svg>

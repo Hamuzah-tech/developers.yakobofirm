@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 72" role="img" aria-label="Tina Beauty">
+  <circle cx="32" cy="36" r="22" fill="#DA3965"/>
+  <path d="M32 22 C38 22 42 28 42 34 C42 44 32 50 32 50 C32 50 22 44 22 34 C22 28 26 22 32 22 Z" fill="#FDE8F0"/>
+  <text x="64" y="32" font-family="Georgia, serif" font-size="18" font-style="italic" fill="#992C56">Tina</text>
+  <text x="64" y="52" font-family="Arial, sans-serif" font-size="11" letter-spacing="3" fill="#DA3965">BEAUTY</text>
+</svg>

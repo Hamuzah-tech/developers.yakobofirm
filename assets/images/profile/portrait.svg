@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 800" role="img" aria-label="James Mussah Hamuzah">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0B1220"/>
+      <stop offset="100%" stop-color="#1E3A8A"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2563EB" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#60A5FA" stop-opacity="0.08"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="800" fill="url(#bg)"/>
+  <circle cx="480" cy="160" r="180" fill="url(#glow)"/>
+  <circle cx="120" cy="680" r="160" fill="#2563EB" opacity="0.12"/>
+  <rect x="80" y="90" width="480" height="620" rx="28" fill="#0F172A" stroke="#1E3A8A" stroke-width="1.5"/>
+  <rect x="80" y="90" width="480" height="8" rx="4" fill="#2563EB"/>
+  <text x="320" y="360" text-anchor="middle" font-family="Arial, sans-serif" font-size="120" font-weight="800" fill="#FFFFFF">JH</text>
+  <text x="320" y="430" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" letter-spacing="4" fill="#93C5FD">JAMES HAMUZAH</text>
+  <text x="320" y="470" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" letter-spacing="3" fill="#64748B">WEB DEVELOPER</text>
+  <rect x="220" y="510" width="200" height="2" fill="#2563EB"/>
+</svg>

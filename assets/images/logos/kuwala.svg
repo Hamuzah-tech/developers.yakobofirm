@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 72" role="img" aria-label="Kuwala Schools">
+  <circle cx="32" cy="36" r="24" fill="#2D113A"/>
+  <circle cx="32" cy="36" r="10" fill="#F78338"/>
+  <path d="M32 18 L34.5 26 H43 L36.2 31 L38.8 39 L32 34.2 L25.2 39 L27.8 31 L21 26 H29.5 Z" fill="#853C9C"/>
+  <text x="66" y="32" font-family="Arial, sans-serif" font-size="18" font-weight="800" fill="#2D113A">KUWALA</text>
+  <text x="66" y="52" font-family="Arial, sans-serif" font-size="10" letter-spacing="2.6" fill="#853C9C">SCHOOLS</text>
+</svg>

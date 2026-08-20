@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 72" role="img" aria-label="YAISK Garden">
+  <circle cx="32" cy="36" r="22" fill="#E67E22"/>
+  <path d="M32 20 C36 28 44 30 44 36 C44 44 38 50 32 52 C26 50 20 44 20 36 C20 30 28 28 32 20 Z" fill="#FFF8F1"/>
+  <text x="64" y="32" font-family="Georgia, serif" font-size="18" font-weight="700" fill="#1F2937">YAISK</text>
+  <text x="64" y="52" font-family="Arial, sans-serif" font-size="10" letter-spacing="2.8" fill="#E67E22">GARDEN</text>
+</svg>
