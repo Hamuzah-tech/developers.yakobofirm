@@ -115,17 +115,17 @@ const clients = [
     {
         name: "Girls Can Malawi",
         logo: "assets/images/logos/c-logo1.jpg",
-        websiteUrl: null
+        websiteUrl: "https://girlscanmw.vercel.app/"
     },
     {
         name: "GPC Malawi",
         logo: "assets/images/logos/c-logo2.jpg",
-        websiteUrl: null
+        websiteUrl: "https://gpc-xi.vercel.app/"
     },
     {
         name: "YAISK Garden",
         logo: "assets/images/logos/c-logo3.jpg",
-        websiteUrl: null
+        websiteUrl: "https://yaisk-slot.vercel.app/"
     },
     {
         name: "Sir Harry Johnston International School",
@@ -142,7 +142,6 @@ const clients = [
  *   "ecommerce" | "portfolio" | "events" | "booking" | "management"
  *
  * websiteUrl  — paste the real live site here, e.g. "https://example.com"
- *               Leave "" until you have it. The yellow button still appears.
  * githubUrl   — real public repo, or null
  */
 const projects = [
@@ -157,12 +156,22 @@ const projects = [
         featured: true
     },
     {
-        name: "Latoya Assurance Limited",
+        name: "Latoya Insurance Company",
         category: "corporate",
         description: "A corporate insurance website built for a Malawi-based provider, presenting products, trust and service information in a refined, institutional layout.",
         image: "assets/images/projects/latoya.svg",
         technologies: ["HTML", "CSS", "JavaScript"],
-        websiteUrl: "",
+        websiteUrl: "https://latoya-insurance-company.vercel.app/",
+        githubUrl: null,
+        featured: true
+    },
+    {
+        name: "Malawi Trust Bank",
+        category: "corporate",
+        description: "A corporate banking website designed to present services, trust and a clear institutional presence for customers and partners.",
+        image: "assets/images/projects/malawi-trust-bank.svg",
+        technologies: ["HTML", "CSS", "JavaScript"],
+        websiteUrl: "https://malawi-trust-bank.vercel.app/",
         githubUrl: null,
         featured: true
     },
@@ -172,37 +181,27 @@ const projects = [
         description: "A women-led organisation website focused on programmes, impact and community work for adolescent girls and young women across Malawi.",
         image: "assets/images/projects/gpc.svg",
         technologies: ["HTML", "CSS", "JavaScript"],
-        websiteUrl: "",
+        websiteUrl: "https://gpc-xi.vercel.app/",
         githubUrl: null,
         featured: true
     },
     {
-        name: "QuickFund Malawi",
+        name: "Aopanji Farm",
         category: "business",
-        description: "A modern finance website designed to communicate loan products, trust and accessibility for individuals and small businesses.",
-        image: "assets/images/projects/quickfund.svg",
+        description: "A business website for a chicken farm, built to present products, farm identity and a clear online presence for customers.",
+        image: "assets/images/projects/aopanji.svg",
         technologies: ["HTML", "CSS", "JavaScript"],
-        websiteUrl: "",
+        websiteUrl: "https://aopanjichickenfarm.vercel.app/",
         githubUrl: null,
         featured: true
     },
     {
-        name: "Kuwala Schools",
-        category: "schools",
-        description: "A distinctive education website built to express school identity, academic offering and a premium admissions presence.",
-        image: "assets/images/projects/kuwala.svg",
+        name: "Girls Can Malawi",
+        category: "organisations",
+        description: "An organisation website presenting programmes, impact and community work for girls and young women across Malawi.",
+        image: "assets/images/projects/girlscan.svg",
         technologies: ["HTML", "CSS", "JavaScript"],
-        websiteUrl: "",
-        githubUrl: null,
-        featured: true
-    },
-    {
-        name: "School Library Management System",
-        category: "web-applications",
-        description: "A custom web-based library system for issuing, returning and tracking books across student and librarian roles.",
-        image: "assets/images/projects/slms.svg",
-        technologies: ["PHP", "JavaScript", "HTML", "CSS"],
-        websiteUrl: "",
+        websiteUrl: "https://girlscanmw.vercel.app/",
         githubUrl: null,
         featured: true
     },
@@ -212,19 +211,9 @@ const projects = [
         description: "A professional law-firm website designed to present practice areas, credibility and a composed digital presence for a Malawian legal practice.",
         image: "assets/images/projects/dwangwa.svg",
         technologies: ["HTML", "CSS", "JavaScript"],
-        websiteUrl: "",
+        websiteUrl: "https://dwangwa.vercel.app/",
         githubUrl: null,
-        featured: false
-    },
-    {
-        name: "Tina Beauty",
-        category: "business",
-        description: "A refined brand website for a makeup artist, built to showcase services, packages and a booking-ready online presence.",
-        image: "assets/images/projects/tina-beauty.svg",
-        technologies: ["HTML", "CSS", "JavaScript"],
-        websiteUrl: "",
-        githubUrl: null,
-        featured: false
+        featured: true
     },
     {
         name: "YAISK Garden",
@@ -232,28 +221,8 @@ const projects = [
         description: "A venue presentation and pricelist experience designed to display event packages with clarity for clients and bookings teams.",
         image: "assets/images/projects/yaisk.svg",
         technologies: ["HTML", "CSS", "JavaScript"],
-        websiteUrl: "",
+        websiteUrl: "https://yaisk-slot.vercel.app/",
         githubUrl: null,
-        featured: false
-    },
-    {
-        name: "Point of Sale System",
-        category: "web-applications",
-        description: "A web-based POS application for sales, inventory and reporting — designed around everyday operational workflows.",
-        image: "assets/images/projects/pos.svg",
-        technologies: ["PHP", "MySQL", "JavaScript", "HTML", "CSS"],
-        websiteUrl: "",
-        githubUrl: null,
-        featured: false
-    },
-    {
-        name: "Exam Results Portal",
-        category: "web-applications",
-        description: "A results-checking application that lets students and administrators access academic outcomes through a structured, secure interface.",
-        image: "assets/images/projects/results.svg",
-        technologies: ["PHP", "MySQL", "JavaScript", "HTML", "CSS"],
-        websiteUrl: "",
-        githubUrl: null,
-        featured: false
+        featured: true
     }
 ];
