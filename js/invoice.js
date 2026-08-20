@@ -11,7 +11,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
 import {
     getAuth,
     GoogleAuthProvider,
-    signInWithPopup,
+    signInWithRedirect,
+    getRedirectResult,
     signOut,
     onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
@@ -59,6 +60,7 @@ const googleBtn = document.getElementById("btn-google");
 let started = false;
 let denyLock = false;
 let logoData = "";
+const REDIRECT_KEY = "yakobo-invoice-redirect";
 
 function currencyCode() {
     const el = document.getElementById("currency");
@@ -173,7 +175,35 @@ function setAuthMessage(message) {
     setupEl.textContent = message;
 }
 
+function authErrorMessage(err) {
+    const code = err && err.code;
+    if (code === "auth/unauthorized-domain") {
+        return "This domain is not authorised in Firebase. Add developers-yakobofirm.vercel.app under Authentication → Settings → Authorized domains.";
+    }
+    if (code === "auth/operation-not-allowed") {
+        return "Google sign-in is not enabled in Firebase. Enable it under Authentication → Sign-in method.";
+    }
+    if (code === "auth/account-exists-with-different-credential") {
+        return "This email is already linked to a different sign-in method.";
+    }
+    if (code === "auth/network-request-failed") {
+        return "Network error during Google sign-in. Check your connection and try again.";
+    }
+    if (code === "auth/internal-error") {
+        return "Google sign-in hit an internal error. Try again.";
+    }
+    if (code === "auth/invalid-api-key") {
+        return "Firebase API key is invalid. Check the firebaseConfig in js/invoice.js.";
+    }
+    if (err && err.message) {
+        return "Google sign-in failed: " + err.message;
+    }
+    return "Google sign-in did not complete. Try again.";
+}
+
 async function handleUser(user) {
+    googleBtn.disabled = false;
+
     if (denyLock && !user) {
         showDenied();
         return;
@@ -191,32 +221,49 @@ async function handleUser(user) {
         showDenied();
         try {
             await signOut(auth);
-        } catch (err) {}
+        } catch (err) {
+            setAuthMessage(authErrorMessage(err));
+        }
         return;
     }
 
     denyLock = false;
+    setAuthMessage("");
     showApp();
 }
 
 async function signInGoogle() {
-    setAuthMessage("");
+    setAuthMessage("Redirecting to Google…");
     googleBtn.disabled = true;
     try {
-        await signInWithPopup(auth, googleProvider);
+        sessionStorage.setItem(REDIRECT_KEY, "1");
+        await signInWithRedirect(auth, googleProvider);
     } catch (err) {
-        const code = err && err.code;
-        if (code === "auth/popup-closed-by-user" || code === "auth/cancelled-popup-request") {
-            setAuthMessage("");
-        } else if (code === "auth/popup-blocked") {
-            setAuthMessage("The sign-in popup was blocked. Allow popups for this site, then try again.");
-        } else if (code === "auth/unauthorized-domain") {
-            setAuthMessage("This domain is not authorised in Firebase. Add it under Authentication > Settings > Authorized domains.");
-        } else {
-            setAuthMessage("Google sign-in did not complete. Try again.");
-        }
-    } finally {
+        sessionStorage.removeItem(REDIRECT_KEY);
         googleBtn.disabled = false;
+        setAuthMessage(authErrorMessage(err));
+    }
+}
+
+async function completeRedirectSignIn() {
+    const pending = sessionStorage.getItem(REDIRECT_KEY) === "1";
+    if (pending) {
+        setAuthMessage("Signing you in…");
+        googleBtn.disabled = true;
+        showGate();
+    }
+
+    try {
+        await getRedirectResult(auth);
+        sessionStorage.removeItem(REDIRECT_KEY);
+        if (pending) {
+            setAuthMessage("");
+        }
+    } catch (err) {
+        sessionStorage.removeItem(REDIRECT_KEY);
+        googleBtn.disabled = false;
+        showGate();
+        setAuthMessage(authErrorMessage(err));
     }
 }
 
@@ -225,6 +272,7 @@ async function firebaseSignOut() {
     try {
         await signOut(auth);
     } catch (err) {
+        setAuthMessage(authErrorMessage(err));
         showGate();
     }
 }
@@ -643,8 +691,9 @@ function startGenerator() {
 googleBtn.addEventListener("click", signInGoogle);
 document.getElementById("btn-retry").addEventListener("click", function () {
     denyLock = false;
+    setAuthMessage("");
     showGate();
 });
 
 onAuthStateChanged(auth, handleUser);
-showGate();
+completeRedirectSignIn();
