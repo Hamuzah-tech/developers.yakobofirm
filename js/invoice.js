@@ -9,7 +9,11 @@
  */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import {
+    initializeAuth,
     getAuth,
+    indexedDBLocalPersistence,
+    browserLocalPersistence,
+    browserPopupRedirectResolver,
     GoogleAuthProvider,
     signInWithRedirect,
     getRedirectResult,
@@ -40,8 +44,22 @@ const INVOICE_CONFIG = {
     }
 };
 
-const firebaseApp = initializeApp(INVOICE_CONFIG.firebaseConfig);
-const auth = getAuth(firebaseApp);
+const host = window.location.hostname;
+const isLocalHost = host === "localhost" || host === "127.0.0.1" || host === "";
+const firebaseConfig = Object.assign({}, INVOICE_CONFIG.firebaseConfig, {
+    authDomain: isLocalHost ? INVOICE_CONFIG.firebaseConfig.authDomain : host
+});
+
+const firebaseApp = initializeApp(firebaseConfig);
+let auth;
+try {
+    auth = initializeAuth(firebaseApp, {
+        persistence: [indexedDBLocalPersistence, browserLocalPersistence],
+        popupRedirectResolver: browserPopupRedirectResolver
+    });
+} catch (err) {
+    auth = getAuth(firebaseApp);
+}
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: "select_account" });
 
@@ -59,6 +77,7 @@ const googleBtn = document.getElementById("btn-google");
 
 let started = false;
 let denyLock = false;
+let authReady = false;
 let logoData = "";
 const REDIRECT_KEY = "yakobo-invoice-redirect";
 
@@ -204,6 +223,10 @@ function authErrorMessage(err) {
 async function handleUser(user) {
     googleBtn.disabled = false;
 
+    if (!authReady && !user) {
+        return;
+    }
+
     if (denyLock && !user) {
         showDenied();
         return;
@@ -236,6 +259,9 @@ async function signInGoogle() {
     setAuthMessage("Redirecting to Google…");
     googleBtn.disabled = true;
     try {
+        if (/\/invoice\.html$/i.test(window.location.pathname)) {
+            history.replaceState({}, "", "/invoice/");
+        }
         sessionStorage.setItem(REDIRECT_KEY, "1");
         await signInWithRedirect(auth, googleProvider);
     } catch (err) {
@@ -245,7 +271,11 @@ async function signInGoogle() {
     }
 }
 
-async function completeRedirectSignIn() {
+async function bootAuth() {
+    if (/\/invoice\.html$/i.test(window.location.pathname)) {
+        history.replaceState({}, "", "/invoice/");
+    }
+
     const pending = sessionStorage.getItem(REDIRECT_KEY) === "1";
     if (pending) {
         setAuthMessage("Signing you in…");
@@ -254,17 +284,29 @@ async function completeRedirectSignIn() {
     }
 
     try {
-        await getRedirectResult(auth);
+        const result = await getRedirectResult(auth);
         sessionStorage.removeItem(REDIRECT_KEY);
-        if (pending) {
+        authReady = true;
+
+        if (result && result.user) {
+            setAuthMessage("");
+            await handleUser(result.user);
+        } else if (pending && !auth.currentUser) {
+            googleBtn.disabled = false;
+            showGate();
+            setAuthMessage("Google signed you in, but this page could not keep the session. Add developers-yakobofirm.vercel.app under Firebase Authentication → Settings → Authorized domains, then try again.");
+        } else if (pending) {
             setAuthMessage("");
         }
     } catch (err) {
         sessionStorage.removeItem(REDIRECT_KEY);
+        authReady = true;
         googleBtn.disabled = false;
         showGate();
         setAuthMessage(authErrorMessage(err));
     }
+
+    onAuthStateChanged(auth, handleUser);
 }
 
 async function firebaseSignOut() {
@@ -695,5 +737,4 @@ document.getElementById("btn-retry").addEventListener("click", function () {
     showGate();
 });
 
-onAuthStateChanged(auth, handleUser);
-completeRedirectSignIn();
+bootAuth();
