@@ -19,7 +19,7 @@ import {
 
 const INVOICE_CONFIG = {
     firebaseConfig: {
-        apiKey: "AIzaSyDRsH2A5ZhLdyzBUBue_SQY3_k7UOIp0ak",
+        apiKey: "AIzaSyDRsH2A5ZhLdyzBUBue_SQY_3k7UOIp0ak",
         authDomain: "invoices-c487c.firebaseapp.com",
         projectId: "invoices-c487c",
         storageBucket: "invoices-c487c.firebasestorage.app",
