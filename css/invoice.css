@@ -85,6 +85,10 @@
     margin-top: 24px;
 }
 
+.google-signin-btn[hidden] {
+    display: none !important;
+}
+
 .invoice-hint {
     margin-top: 10px;
     font-size: 0.88rem;
