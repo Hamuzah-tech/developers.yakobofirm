@@ -44,13 +44,7 @@ const INVOICE_CONFIG = {
     }
 };
 
-const host = window.location.hostname;
-const isLocalHost = host === "localhost" || host === "127.0.0.1" || host === "";
-const firebaseConfig = Object.assign({}, INVOICE_CONFIG.firebaseConfig, {
-    authDomain: isLocalHost ? INVOICE_CONFIG.firebaseConfig.authDomain : host
-});
-
-const firebaseApp = initializeApp(firebaseConfig);
+const firebaseApp = initializeApp(INVOICE_CONFIG.firebaseConfig);
 let auth;
 try {
     auth = initializeAuth(firebaseApp, {
