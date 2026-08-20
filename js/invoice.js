@@ -34,7 +34,7 @@ const INVOICE_CONFIG = {
     allowedEmail: "jmhamuzah@gmail.com",
     business: {
         name: "Yakobo Web Development Firm",
-        logo: "assets/images/logo.png",
+        logo: "/assets/images/logo.png",
         phone: "+265 990 705 194",
         email: "jmhamuzah@gmail.com",
         website: "",
@@ -80,6 +80,20 @@ let denyLock = false;
 let authReady = false;
 let logoData = "";
 const REDIRECT_KEY = "yakobo-invoice-redirect";
+const INVOICE_PATH = "/invoice";
+
+function normalizeInvoiceUrl() {
+    const path = window.location.pathname;
+    if (
+        path === INVOICE_PATH ||
+        path === "/invoice/" ||
+        /\/invoice(\/index)?\.html$/i.test(path)
+    ) {
+        if (path !== INVOICE_PATH) {
+            history.replaceState({}, "", INVOICE_PATH);
+        }
+    }
+}
 
 function currencyCode() {
     const el = document.getElementById("currency");
@@ -259,9 +273,7 @@ async function signInGoogle() {
     setAuthMessage("Redirecting to Google…");
     googleBtn.disabled = true;
     try {
-        if (/\/invoice\.html$/i.test(window.location.pathname)) {
-            history.replaceState({}, "", "/invoice/");
-        }
+        normalizeInvoiceUrl();
         sessionStorage.setItem(REDIRECT_KEY, "1");
         await signInWithRedirect(auth, googleProvider);
     } catch (err) {
@@ -272,9 +284,7 @@ async function signInGoogle() {
 }
 
 async function bootAuth() {
-    if (/\/invoice\.html$/i.test(window.location.pathname)) {
-        history.replaceState({}, "", "/invoice/");
-    }
+    normalizeInvoiceUrl();
 
     const pending = sessionStorage.getItem(REDIRECT_KEY) === "1";
     if (pending) {

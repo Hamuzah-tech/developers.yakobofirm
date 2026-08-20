@@ -5,6 +5,7 @@
       "destination": "https://invoices-c487c.firebaseapp.com/__/auth/:path*"
     },
     { "source": "/invoice", "destination": "/invoice.html" },
-    { "source": "/invoice/", "destination": "/invoice.html" }
+    { "source": "/invoice/", "destination": "/invoice.html" },
+    { "source": "/invoice/index.html", "destination": "/invoice.html" }
   ]
 }
